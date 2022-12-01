@@ -3,7 +3,8 @@
 }
 main {
     height: 730px;
-    margin: 50px 500px 50px 500px;
+    width: 460px;
+    margin: 50px auto 50px auto;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -14,14 +15,12 @@ main {
     flex-grow: 1;
     margin: 10px;
     padding: 20px 10px 20px 10px;
-
-
 }
 .display {
     display: flex;
     flex-grow: 1;
 }
-.calculatorBtn {
+.btn-container {
     display: flex;
     flex-grow: 5;
     margin: 10px;
