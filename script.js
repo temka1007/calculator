@@ -27,19 +27,45 @@ const equal = document.querySelector(".equal");
 
 let firstInput = [];
 let secondInput = [];
+let answer;
+let counter = 1;
 let changer = 0;
+let chosenOperation;
 
 buttons.forEach(button => {
     button.addEventListener("click", (e) => {
         if (changer === 0) {
-            firstInput.push(e.target.value)
+            firstInput.push(e.target.value);
         } else if (changer === 1) {
             secondInput.push(e.target.value)
         }
     })
 });
 
+function functionAdd(x, y) {
+    answer = x + y;
+    console.log(answer);
+}
 
+function operate(x, y) {
+    if (chosenOperation == "+") {
+        functionAdd(x, y);
+    } else {
+        console.log("oops")
+    }
+};
 
-equal.addEventListener("click", () => changer = 1);
+add.addEventListener("click", () => {
+    counter++;
+    changer = 1;
+    chosenOperation = "+";
+})
+
+equal.addEventListener("click", () => {
+    let a = Number(firstInput.join(""));
+    let b = Number(secondInput.join(""));
+    operate(a, b);
+    firstInput = [];
+    changer = 0;
+})
 
