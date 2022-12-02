@@ -1,73 +1,123 @@
 const display = document.querySelector(".display");
 
-const zero = document.querySelector(".zero");
-const one = document.querySelector(".one");
-const two = document.querySelector(".two");
-const three = document.querySelector(".three");
-const four = document.querySelector(".four");
-const five = document.querySelector(".five");
-const six = document.querySelector(".six");
-const seven = document.querySelector(".seven");
-const eight = document.querySelector(".eight");
-const nine = document.querySelector(".nine");
 const dot = document.querySelector(".dot");
 const minus = document.querySelector(".minus");
 
 const buttons = document.querySelectorAll(".btn");
+const operators = document.querySelectorAll(".operator");
 
 const allCancel = document.querySelector(".all-cancel");
 const cancel = document.querySelector(".cancel");
-const percent = document.querySelector(".percent");
-const divide = document.querySelector(".divide");
-const multiply = document.querySelector(".multiply");
-const subtract = document.querySelector(".subtract");
-const add = document.querySelector(".add");
+
 const equal = document.querySelector(".equal");
 
 
 let userInput = [];
 let secondInput = [];
 let answer = 0;
-let counter = 0;
-let changer = 0;
 let chosenOperation;
-
+let convertToMinus = 0;
 let a;
-let b = 0;
 
 
 buttons.forEach(button => {
     button.addEventListener("click", (e) => {
         userInput.push(e.target.value);
-        console.log(e.target.value)
+        console.log(e.target.value);
     })
 });
 
-function functionAdd(x, y) {
-    answer = x + y;
-}
+dot.addEventListener("click", (e) => {
+    userInput.push(e.target.value);
+    console.log(e.target.value);
+});
 
-function operate(x, y) {
-    if (chosenOperation == "+") {
-        functionAdd(x, y);
+minus.addEventListener("click", () => {
+    convertToMinus = 1;
+})
+
+function functionAdd(oldAnswer, input) {
+    answer = oldAnswer+input
+};
+function functionSubtract(oldAnswer, input) {
+    if (answer == 0) {
+        answer = input;
+    } else if (input == 0) {
+        answer = oldAnswer;
     } else {
-        console.log("oops")
-    }
+        answer = oldAnswer - input;
+    };
+};
+function functionMultiply(oldAnswer, input) {
+    if (answer == 0) {
+        answer = input;
+    } else if (input == 0) {
+        answer = oldAnswer;
+    } else {
+        answer = oldAnswer * input;
+    };
+};
+function functionDivide(oldAnswer, input) {
+    if (answer == 0) {
+        answer = input;
+    } else if (input == 0) {
+        answer = oldAnswer;
+    } else {
+        answer = oldAnswer / input;
+    };
+};
+function functionPercent(oldAnswer, input) {
+    if (answer == 0) {
+        answer = input;
+    } else if (input == 0) {
+        answer = oldAnswer;
+    } else {
+        answer = oldAnswer % input;
+    };
 };
 
-add.addEventListener("click", () => {
-    a = Number(userInput.join(""));
-    chosenOperation = "+";
-    operate(a, answer);
-    userInput = [];
-    console.log(chosenOperation)
+function operate(oldAnswer, input) {
+    if (chosenOperation == "+") {
+        functionAdd(oldAnswer, input);
+    } else if (chosenOperation == "-") {
+        functionSubtract(oldAnswer, input)
+    } else if (chosenOperation == "*") {
+        functionMultiply(oldAnswer, input)
+    } else if (chosenOperation == "/") {
+        functionDivide(oldAnswer, input)
+    } else if (chosenOperation == "%") {
+        functionPercent(oldAnswer, input)
+    };
+};
 
+operators.forEach(operator => {
+    operator.addEventListener("click", (e) => {
+        if(convertToMinus == 0) {
+            a = Number(userInput.join(""));
+        } else if (convertToMinus == 1) {
+            a = Number(userInput.join(""));
+            a = a * (-1);
+        }
+        chosenOperation = e.target.value;
+        operate(answer, a);
+        userInput = [];
+        convertToMinus = 0;
+        console.log(chosenOperation)
+    })
 })
 
 equal.addEventListener("click", () => {
-    a = Number(userInput.join(""));
-    operate(a, answer);
+    if(convertToMinus == 0) {
+        a = Number(userInput.join(""));
+    } else if (convertToMinus == 1) {
+        a = Number(userInput.join(""));
+        a = a * (-1);
+    }
+    operate(answer, a);
     userInput = [];
+    convertToMinus = 0;
     console.log(answer);
 })
+
+
 
