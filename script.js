@@ -19,6 +19,20 @@ let chosenOperation;
 let convertToMinus = 0;
 let a;
 
+allCancel.addEventListener("click", () => {
+    userInput = [];
+    secondInput = [];
+    answer = 0;
+    chosenOperation;
+    convertToMinus = 0;
+    a;
+    console.clear();
+});
+
+cancel.addEventListener("click", () => {
+    userInput.pop();
+    console.log("popped!")
+})
 
 buttons.forEach(button => {
     button.addEventListener("click", (e) => {
@@ -114,9 +128,10 @@ equal.addEventListener("click", () => {
         a = a * (-1);
     }
     operate(answer, a);
-    userInput = [];
     convertToMinus = 0;
     console.log(answer);
+    answer = 0;
+    userInput = [];
 })
 
 
