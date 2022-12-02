@@ -25,26 +25,26 @@ const add = document.querySelector(".add");
 const equal = document.querySelector(".equal");
 
 
-let firstInput = [];
+let userInput = [];
 let secondInput = [];
-let answer;
-let counter = 1;
+let answer = 0;
+let counter = 0;
 let changer = 0;
 let chosenOperation;
 
+let a;
+let b = 0;
+
+
 buttons.forEach(button => {
     button.addEventListener("click", (e) => {
-        if (changer === 0) {
-            firstInput.push(e.target.value);
-        } else if (changer === 1) {
-            secondInput.push(e.target.value)
-        }
+        userInput.push(e.target.value);
+        console.log(e.target.value)
     })
 });
 
 function functionAdd(x, y) {
     answer = x + y;
-    console.log(answer);
 }
 
 function operate(x, y) {
@@ -56,16 +56,18 @@ function operate(x, y) {
 };
 
 add.addEventListener("click", () => {
-    counter++;
-    changer = 1;
+    a = Number(userInput.join(""));
     chosenOperation = "+";
+    operate(a, answer);
+    userInput = [];
+    console.log(chosenOperation)
+
 })
 
 equal.addEventListener("click", () => {
-    let a = Number(firstInput.join(""));
-    let b = Number(secondInput.join(""));
-    operate(a, b);
-    firstInput = [];
-    changer = 0;
+    a = Number(userInput.join(""));
+    operate(a, answer);
+    userInput = [];
+    console.log(answer);
 })
 
