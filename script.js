@@ -19,48 +19,9 @@ let chosenOperation;
 let convertToMinus = 0;
 let a;
 let changer = 0;
+let dotChanger = 0;
+let operatorLimiter = 0;
 
-allCancel.addEventListener("click", () => {
-    userInput = [];
-    secondInput = [];
-    answer = 0;
-    chosenOperation;
-    convertToMinus = 0;
-    a;
-    while (display.firstChild){
-        display.removeChild(display.lastChild);
-    }
-    console.clear();
-});
-
-cancel.addEventListener("click", () => {
-    userInput.pop();
-    display.removeChild(display.lastChild);
-    console.log("popped!")
-})
-
-buttons.forEach(button => {
-    button.addEventListener("click", (e) => {
-        if (changer == 1) {
-            while (display.firstChild){
-                display.removeChild(display.lastChild);
-            }
-            changer = 0;
-        }
-        userInput.push(e.target.value);
-        createNmr(e.target.value); 
-        console.log(e.target.value);
-    })
-});
-
-dot.addEventListener("click", (e) => {
-    userInput.push(e.target.value);
-    console.log(e.target.value);
-});
-
-minus.addEventListener("click", () => {
-    convertToMinus = 1;
-})
 
 function createNmr(nmr) {
     const number = document.createElement("div");
@@ -132,8 +93,10 @@ operators.forEach(operator => {
             a = a * (-1);
         }
         chosenOperation = e.target.value;
-        createNmr(e.target.value); 
         operate(answer, a);
+        while (display.firstChild){
+            display.removeChild(display.lastChild);
+        }
         userInput = [];
         convertToMinus = 0;
         console.log(chosenOperation)
@@ -151,7 +114,14 @@ equal.addEventListener("click", () => {
     while (display.firstChild){
         display.removeChild(display.lastChild);
     }
-    createNmr(answer);
+    if (answer > 999999999999999) {
+        const number = document.createElement("div");
+        number.textContent = "ERROR";
+        number.classList.add("number");
+        display.appendChild(number);
+    } else {
+        createNmr(answer);
+    }
     changer = 1;
     convertToMinus = 0;
     console.log(answer);
@@ -159,5 +129,52 @@ equal.addEventListener("click", () => {
     userInput = [];
 })
 
+allCancel.addEventListener("click", () => {
+    userInput = [];
+    secondInput = [];
+    answer = 0;
+    chosenOperation;
+    convertToMinus = 0;
+    a;
+    while (display.firstChild){
+        display.removeChild(display.lastChild);
+    }
+    console.clear();
+});
 
+cancel.addEventListener("click", () => {
+    userInput.pop();
+    display.removeChild(display.lastChild);
+    console.log("popped!")
+})
 
+buttons.forEach(button => {
+    button.addEventListener("click", (e) => {
+        if (changer == 1) {
+            while (display.firstChild){
+                display.removeChild(display.lastChild);
+            }
+            changer = 0;
+        }
+        userInput.push(e.target.value);
+        createNmr(e.target.value); 
+        limitToNumber();
+        console.log(e.target.value);
+    })
+});
+
+dot.addEventListener("click", (e) => {
+    userInput.push(e.target.value);
+    createNmr(e.target.value); 
+    console.log(e.target.value);
+});
+
+minus.addEventListener("click", () => {
+    convertToMinus = 1;
+})
+
+function limitToNumber() {
+    while (document.getElementsByClassName('number').length > 15) {
+        display.removeChild(display.lastChild);
+    }
+}
