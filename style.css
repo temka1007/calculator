@@ -68,3 +68,6 @@ main {
     border-color: rgb(44, 160, 255);
     border-radius: 7px;
 }
+button {
+    all: unset;
+}
